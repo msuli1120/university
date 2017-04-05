@@ -1,11 +1,11 @@
 {% include 'header.html.twig' %}
 
-<p>Student Name: {{ student.getName }}</p>
+<p>Student Name: <strong>{{ student.getName }}</strong></p>
 <p>Enroll Date: {{ student.getEnrollDate }}</p>
 <p>Courses:</p>
 <ol>
   {% for course in courses %}
-    <li>{{ course.course }}</li>
+    <li><a href="/course/{{ course.id }}">{{ course.course }}</a></li>
   {% endfor %}
 </ol>
 

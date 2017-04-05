@@ -57,7 +57,7 @@
     }
 
     function getCourses($id){
-      $executed = $GLOBALS['db']->prepare("SELECT course FROM courses JOIN students_courses ON (students_courses.course_id = courses.id) JOIN students ON (students.id = students_courses.student_id) WHERE students.id = :id;");
+      $executed = $GLOBALS['db']->prepare("SELECT courses.* FROM courses JOIN students_courses ON (students_courses.course_id = courses.id) JOIN students ON (students.id = students_courses.student_id) WHERE students.id = :id;");
       $executed->bindParam(':id', $id, PDO::PARAM_INT);
       $executed->execute();
       $results = $executed->fetchAll(PDO::FETCH_ASSOC);
