@@ -33,23 +33,31 @@
   });
 
   $app->post("/addcourse", function () use ($app) {
-    $new_course = new Course($_POST['course']);
-    $new_course->save();
-    return $app['twig']->render('registercourse.html.twig', array('courses'=>Course::getAll()));
+    if(empty($_POST['course'])){
+      return $app['twig']->render('warning.html.twig');
+    } else {
+      $new_course = new Course($_POST['course']);
+      $new_course->save();
+      return $app['twig']->render('registercourse.html.twig', array('courses'=>Course::getAll()));
+    }
   });
 
   $app->get("/registerstudent", function () use ($app) {
-    return $app['twig']->render('registerstudent.html.twig', array('courses'=>Course::getAll(), 'students'=>Student::getAll()));
+    return $app['twig']->render('registerstudent.html.twig', array('courses'=>Course::getAll(), 'students'=>Student::getAll(), 'studentscount'=>count(Student::getAll())));
   });
 
   $app->post("/registerstudent", function () use ($app) {
-    $new_student = new Student($_POST['name']);
-    $new_student->save();
-    $course_id_array = $_POST['course_id'];
-    foreach($course_id_array as $course_id){
-      $new_student->saveCourse($course_id);
+    if(empty($_POST['name'])||empty($_POST['course_id'])){
+      return $app['twig']->render('warning.html.twig');
+    } else {
+      $new_student = new Student($_POST['name']);
+      $new_student->save();
+      $course_id_array = $_POST['course_id'];
+      foreach($course_id_array as $course_id){
+        $new_student->saveCourse($course_id);
+      }
+      return $app['twig']->render('registerstudent.html.twig', array('courses'=>Course::getAll(), 'students'=>Student::getAll(), 'studentscount'=>count(Student::getAll())));
     }
-    return $app['twig']->render('registerstudent.html.twig', array('courses'=>Course::getAll(), 'students'=>Student::getAll()));
   });
 
   $app->get("/student/{id}", function ($id) use ($app) {
