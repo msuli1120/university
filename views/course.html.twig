@@ -1,0 +1,13 @@
+{% include 'header.html.twig' %}
+
+<h2>Course: {{ course.getCourse }}</h2>
+<h4>Total students: {{ studentscount }}</h4>
+<ol>
+  {% for student in students %}
+    <li><a href="/student/{{ student.id }}">{{ student.name }}</a></li>
+  {% endfor %}
+</ol>
+
+<a href="/">Home</a>
+
+{% include 'footer.html.twig' %}

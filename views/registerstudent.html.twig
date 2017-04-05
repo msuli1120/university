@@ -1,0 +1,25 @@
+{% include 'header.html.twig' %}
+
+  <h2>Register A Student</h2>
+
+  <form action="/registerstudent" method="post">
+    <label for="name">Enter Name:</label>
+    <input type="text" name="name">
+    {% for course in courses %}
+      <div class="form-group">
+        <input type="checkbox" name="course_id[]" value="{{ course.getId }}">{{ course.getCourse }}
+      </div>
+    {% endfor %}
+    <button type="submit">Register</button>
+  </form>
+
+  <a href="/">Home</a>
+
+  {% for student in students %}
+
+    <li><a href="/student/{{ student.getId }}">{{ student.getName }}</a></li>
+
+  {% endfor %}
+
+
+{% include 'footer.html.twig' %}
